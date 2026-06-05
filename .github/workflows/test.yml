@@ -14,8 +14,6 @@ jobs:
 
       - uses: Homebrew/actions/setup-homebrew@main
 
-      - run: brew tap mertkayacs/reevesagents "$GITHUB_WORKSPACE"
-
       - run: brew install --build-from-source mertkayacs/reevesagents/reevesagents
 
       - run: brew test mertkayacs/reevesagents/reevesagents
