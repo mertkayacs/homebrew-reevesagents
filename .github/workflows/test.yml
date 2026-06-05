@@ -1,0 +1,21 @@
+name: test
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  formula:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Homebrew/actions/setup-homebrew@main
+
+      - run: brew tap mertkayacs/reevesagents "$GITHUB_WORKSPACE"
+
+      - run: brew install --build-from-source mertkayacs/reevesagents/reevesagents
+
+      - run: brew test mertkayacs/reevesagents/reevesagents
