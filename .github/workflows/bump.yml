@@ -4,7 +4,8 @@ name: bump formula
 # npm. Runs daily and can be triggered by hand from the Actions tab (run it after
 # a release, or to recover if the daily schedule was paused after 60 days of repo
 # inactivity). No cross-repo token: it writes to this repo with the built-in
-# GITHUB_TOKEN.
+# GITHUB_TOKEN. The bump only lands if the new formula actually installs and its
+# test passes, so a broken upstream never ships.
 
 on:
   workflow_dispatch:
@@ -20,7 +21,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Bump formula to the latest npm version
+      - uses: Homebrew/actions/setup-homebrew@main
+
+      - name: Bump to the latest npm version and verify it installs
         run: |
           set -euo pipefail
           formula="Formula/reevesagents.rb"
@@ -37,6 +40,11 @@ jobs:
           rm -f pkg.tgz
           sed -i -E "s#url \"[^\"]*reevesagents-[0-9][0-9.]*\.tgz\"#url \"${url}\"#" "$formula"
           sed -i -E "s/sha256 \"[0-9a-f]{64}\"/sha256 \"${sha}\"/" "$formula"
+
+          # Only ship the bump if the new formula actually installs and runs.
+          brew install --build-from-source "$PWD/$formula"
+          brew test reevesagents
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "$formula"
