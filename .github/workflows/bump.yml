@@ -42,8 +42,10 @@ jobs:
           sed -i -E "s/sha256 \"[0-9a-f]{64}\"/sha256 \"${sha}\"/" "$formula"
 
           # Only ship the bump if the new formula actually installs and runs.
-          brew install --build-from-source "$PWD/$formula"
-          brew test reevesagents
+          # setup-homebrew symlinks this checkout in as the tap, so installing by
+          # tap name picks up the freshly bumped formula; a bare path is rejected.
+          brew install --build-from-source mertkayacs/reevesagents/reevesagents
+          brew test mertkayacs/reevesagents/reevesagents
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
