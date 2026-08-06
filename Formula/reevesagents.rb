@@ -1,8 +1,8 @@
 class Reevesagents < Formula
   desc "Local tmux-first workspace manager for AI CLI agents"
   homepage "https://github.com/mertkayacs/reevesagents"
-  url "https://registry.npmjs.org/reevesagents/-/reevesagents-1.7.5.tgz"
-  sha256 "f931b65794cb30d976bc58cce4d282f2f2ebb7e95b04315e2172aacd2fc18e9b"
+  url "https://registry.npmjs.org/reevesagents/-/reevesagents-1.7.6.tgz"
+  sha256 "abafaf40a0ea235320bb05b4b3d68ebd3ab76bc1067744b1ae547ec32525c994"
   license "Apache-2.0"
 
   depends_on "node"
