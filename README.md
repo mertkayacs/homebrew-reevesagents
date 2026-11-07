@@ -9,7 +9,7 @@
 
 <p align="center">
   Homebrew tap for ReevesAgents.<br>
-  <b>One formula. Pulls in Node and tmux. Follows npm releases daily.</b>
+  <b>One formula. Pulls in Node and tmux. Follows npm releases within minutes.</b>
 </p>
 
 <p align="center">
@@ -25,7 +25,14 @@
   <a href="https://reevesagents.mertkayacs.com/?utm_source=github&utm_medium=readme&utm_campaign=homebrew-reevesagents-repo&utm_content=website-badge"><img alt="Website" src="https://img.shields.io/badge/Website-1A202C?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIyIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPjxwYXRoIGQ9Ik0xMiAyYTE0LjUgMTQuNSAwIDAgMCAwIDIwYTE0LjUgMTQuNSAwIDAgMCAwLTIwTTIgMTJoMjAiLz48L2c%2BPC9zdmc%2B&logoColor=white"></a>
 </p>
 
-This tap installs ReevesAgents, a local workspace that runs AI coding CLIs side by side in tmux, with Homebrew. The formula installs the `reevesagents` npm package and pulls in `node` and `tmux`. A daily workflow moves it to each new npm release, and it only commits after `brew install` and `brew test` pass.
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/hero-dark.webp">
+    <img src="docs/assets/readme/hero-light.webp" alt="Formula/reevesagents.rb: the npm tarball URL and its SHA-256 checksum, node and tmux as dependencies, the npm install step and a version test" width="960">
+  </picture>
+</p>
+
+This tap installs ReevesAgents, a local workspace that runs AI coding CLIs side by side in tmux, with Homebrew. The formula installs the `reevesagents` npm package and pulls in `node` and `tmux`. The main repository's post-publish workflow bumps it after an npm release, and since 1.7.0 every bump has landed within five minutes of the release. A daily workflow in this tap catches up when a bump is missing, and it only commits after `brew install` and `brew test` pass.
 
 ---
 
@@ -38,6 +45,49 @@ The tap keeps a Homebrew install of ReevesAgents on the current npm release.
 | <img src="docs/assets/readme/icons/package.svg" width="18" height="18" alt=""> **One command** | A single `brew install` taps the repository and installs the CLI with Node and tmux. |
 | <img src="docs/assets/readme/icons/refresh-cw.svg" width="18" height="18" alt=""> **Follows npm** | A daily workflow reads the latest npm version, updates the URL and checksum, and commits only when the new formula installs and passes `brew test` ([bump.yml](.github/workflows/bump.yml)). |
 | <img src="docs/assets/readme/icons/badge-check.svg" width="18" height="18" alt=""> **Tested on every change** | Every push and pull request installs the formula from source and runs `brew test` on Linux ([test.yml](.github/workflows/test.yml)). |
+
+## A quick tour
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/tour-history-dark.webp">
+        <img src="docs/assets/readme/tour-history-light.webp" alt="git log of Formula/reevesagents.rb from reevesagents 2.1.0 back to the first formula commit">
+      </picture>
+      <h3>Formula history</h3>
+      One commit per version bump. Since 1.7.0 each bump reached this tap within five minutes of the npm release.
+    </td>
+    <td width="50%" valign="top">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/tour-bump-dark.webp">
+        <img src="docs/assets/readme/tour-bump-light.webp" alt="Lines 44 to 55 of bump.yml, which rewrite the checksum, run brew install and brew test, then commit the bump">
+      </picture>
+      <h3>Daily catch-up</h3>
+      When a bump is missing, the daily workflow rewrites the URL and checksum and commits only after brew install and brew test pass.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/tour-test-dark.webp">
+        <img src="docs/assets/readme/tour-test-light.webp" alt="test.yml, which installs the formula from source and runs brew test on every push and pull request">
+      </picture>
+      <h3>Tested on every push</h3>
+      Every push and pull request builds the formula from source and runs brew test on Ubuntu.
+    </td>
+    <td width="50%" valign="top">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/assets/readme/tour-npx-dark.webp">
+        <img src="docs/assets/readme/tour-npx-light.webp" alt="npx running reevesagents 2.1.0 in a clean home directory, printing its version and the 25 coding CLIs it can drive">
+      </picture>
+      <h3>What it installs</h3>
+      The formula installs this npm package. Run with npx in a clean home directory, it prints its version and lists the 25 coding CLIs it can drive.
+    </td>
+  </tr>
+</table>
+
+<p align="center"><sub>Code cards show the files as they are in this repository. Terminal cards are real runs: the git history from a fresh clone and the npm package through npx in a clean home directory.</sub></p>
 
 ## Features
 
@@ -83,7 +133,7 @@ The `reevesagents` npm package, with Homebrew's `node` and `tmux` as dependencie
 <details>
 <summary><b>How soon do new releases arrive?</b></summary>
 
-The bump workflow is scheduled to check npm every day at 06:00 UTC, and GitHub often starts scheduled runs a few hours later. It can also be run by hand from the Actions tab after a release.
+Within minutes. The main repository's post-publish workflow bumps the formula after an npm release, and since 1.7.0 every bump reached this tap less than five minutes after npm. The daily workflow here, scheduled for 06:00 UTC, catches up if a bump was missed, and it can also be run by hand from the Actions tab.
 </details>
 
 <details>
@@ -93,5 +143,7 @@ In the main repository: [reevesagents issues](https://github.com/mertkayacs/reev
 </details>
 
 If homebrew-reevesagents is useful to you, a ⭐ helps other people find it.
+
+Photos behind the screenshots are credited in [docs/assets/readme/CREDITS.md](docs/assets/readme/CREDITS.md).
 
 [![views](https://hits.sh/github.com/mertkayacs/homebrew-reevesagents.svg?view=today-total&style=flat-square&label=views&color=006D77&labelColor=1A202C)](https://reevesagents.mertkayacs.com/?utm_source=github&utm_medium=readme&utm_campaign=homebrew-reevesagents-repo&utm_content=views-badge)
